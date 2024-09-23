@@ -6,14 +6,11 @@
     <title>Iframe Example</title>
 </head>
 <body>
-    <h1>Main Frame34343</h1>
+    <h1>Main Frame2</h1>
+    <iframe id="main_frame" src="http://war.sschall.xyz:60001/flag?flag=s" width="100%" height="600px"></iframe>
+
     <script>
-        const iframe = document.createElement('iframe');
-        iframe.id = 'main_frame';
-        iframe.src = 'http://war.sschall.xyz:60001/flag?flag=a';
-        iframe.width = '100%';
-        iframe.height = '600px';
-        document.body.appendChild(iframe);
+        const iframe = document.getElementById('main_frame');
 
         iframe.onload = async () => {
             let childIframesCount;
