@@ -1,0 +1,57 @@
+<html lang="en"><head>
+    
+    <title>YANA</title>
+    <style>/* Nothing useful here (for this challenge). Go find a webdesign write-up */</style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>YANA</h1>
+      <h2>yet another notepad app</h2>
+      <form id="note" method="post" action="https://chal.yana.wtf/note">
+        <textarea name="note"></textarea>
+        <br>
+        <button type="submit">save</button>
+      </form>
+      <form id="search" method="get" action="https://chal.yana.wtf/">
+        <input type="text" name="search">
+        <br>
+        <button type="submit">search</button>
+      </form>
+      <div id="output">found! <br><img src="./YANA_files/y.png"></div>
+    </div>
+    <script>
+      const noteForm = document.getElementById("note");
+      noteForm.onsubmit = (e) => {
+        e.preventDefault();
+        window.localStorage.setItem("note", new FormData(noteForm).get("note"));
+      };
+
+      const searchForm = document.getElementById("search");
+      const output = document.getElementById("output");
+      searchForm.onsubmit = (e) => {
+        e.preventDefault();
+        const query = new FormData(searchForm).get("search") ?? "";
+        document.location.hash = query;
+        search();
+      };
+
+      function search() {
+        const note = window.localStorage.getItem("note") ?? "";
+        console.log(`note: ${note}`);
+        const query = document.location.hash.substring(1);
+        console.log(`query: ${query}`);
+        if (query) {
+          if (note.includes(query)) {
+            console.log('found');
+            output.innerHTML =
+              'found! <br/><img src="https://sigpwny.com/uiuctf/y.png"></img>';
+          } else {
+            console.log('not found');
+            output.innerHTML =
+              'nope.. <br/><img src="https://sigpwny.com/uiuctf/n.png"></img>';
+          }
+        }
+      }
+      search();
+    </script>
+</body></html>
