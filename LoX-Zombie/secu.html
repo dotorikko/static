@@ -41,11 +41,11 @@
     <body>
         <!-- Run the test function with the "no flag" string -->
         <script>
-            // Before running runTest, add a new iframe for the 1.jpg image
-            var iframe_image = document.createElement('iframe');
-            iframe_image.style.display = 'none';  // Hide the iframe
-            iframe_image.src = 'http://125.138.133.213:44444/static/images/1.jpg';  // Image URL
-            document.body.appendChild(iframe_image);  // Append iframe to the body
+           // Add an image element for the 1.jpg image
+            var img = document.createElement('img');
+            img.style.display = 'none';  // Hide the image
+            img.src = 'http://125.138.133.213:44444/static/images/1.jpg';  // Image URL
+            document.body.appendChild(img);  // Append the image to the body
           
             runTest("S");
         </script>
